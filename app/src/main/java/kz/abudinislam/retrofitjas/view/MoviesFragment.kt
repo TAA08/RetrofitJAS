@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import kz.abudinislam.retrofitjas.databinding.FragmentMoviesBinding
 import kz.abudinislam.retrofitjas.model.Result
 import kz.abudinislam.retrofitjas.viewmodel.MoviesViewModel
+import kz.abudinislam.retrofitjas.viewmodel.ViewModelProviderFactory
 import kotlin.coroutines.CoroutineContext
 
 
@@ -57,7 +58,8 @@ class MoviesFragment : Fragment(),CoroutineScope {
     }
 
     private fun initAndObserveViewModel(){
-        viewModel = ViewModelProvider(this)[MoviesViewModel::class.java]
+        val viewModelProviderFactory = ViewModelProviderFactory(requireActivity())
+        viewModel = ViewModelProvider(this, viewModelProviderFactory)[MoviesViewModel::class.java]
         viewModel.loadingState.observe(viewLifecycleOwner){
         when(it){
         is MoviesViewModel.State.ShowLoading ->binding.progressBar.visibility = View.VISIBLE
